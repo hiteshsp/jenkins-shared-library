@@ -44,7 +44,7 @@ class Configuration implements Serializable {
     def helloWorld() {
         steps.sh script: 'echo helloworld', returnStdout: true
         def lib = steps.libraryResource "org/visa/jenkins/volpay-bo-business.yaml"
-        println lib.toString()
+        println lib
     }
 
     def configureValuesYAML(String environment, String fileName, JSONArray listOfIPs) {
@@ -52,7 +52,7 @@ class Configuration implements Serializable {
             def filePath = "org/visa/jenkins/volpay-bo-business.yaml"
             def valuesFile = steps.libraryResource filePath
 
-            println(valuesFile)
+            println valuesFile
             /*println valuesFile.toString()
             def valuesYAML = steps.readYaml text: valuesFile
             println valuesYAML.toString()
