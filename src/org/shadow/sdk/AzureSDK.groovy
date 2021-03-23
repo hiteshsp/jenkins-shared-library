@@ -5,7 +5,7 @@ import net.sf.json.JSONArray
 
 class AzureSDK implements Serializable {
 
-    private static final Script steps
+    private static Script steps
 
     private static AzureSDK instance
 
