@@ -19,7 +19,7 @@ class AzureSDK implements Serializable {
     }
 
     static AzureSDK getInstance() {
-        if (instance) {
+        if (instance == null) {
             instance = new AzureSDK(steps)
         }
         return  instance
