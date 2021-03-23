@@ -47,7 +47,8 @@ class Configuration implements Serializable {
 
     def configureValuesYAML(String environment, String fileName, JSONArray listOfIPs) {
         try {
-            def valuesFile = steps.libraryResource "com/visa/jenkins/$fileName"
+            def filePath = "com/visa/jenkins/" + fileName
+            def valuesFile = steps.libraryResource filePath
 
             println(valuesFile)
             /*println valuesFile.toString()
