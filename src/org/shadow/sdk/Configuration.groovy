@@ -33,7 +33,7 @@ class Configuration implements Serializable {
 
     def configureValuesYAML(String environment, String fileName, JSONArray listOfIPs) {
         try {
-            String valuesFile = libraryResource "com/visa/jenkins/$fileName"
+            String valuesFile = steps.libraryResource "com/visa/jenkins/$fileName"
             println(valuesFile)
 
             def valuesYAML = steps.readYaml text: valuesFile
