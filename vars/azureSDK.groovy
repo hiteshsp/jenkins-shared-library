@@ -1,0 +1,31 @@
+import org.shadow.sdk.AzureSDK;
+
+def call() {
+    AzureSDK object = AzureSDK.getInstance()
+
+    pipeline {
+        agent {
+            label 'docker'
+        }
+        options {
+            timestamps()
+            buildDiscarder(logRotator(numToKeepStr: '10'))
+        }
+        stages {
+            stage('Test SDK') {
+                steps {
+                    script {
+                        println object.getIPs('dev1')
+                    }
+                }
+            }
+        }
+        post {
+            always {
+                //cleanWs()
+                echo "BUILD Completed"
+            }
+        }
+
+    }
+}
