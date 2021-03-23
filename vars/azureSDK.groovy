@@ -17,7 +17,7 @@ def call() {
             stage('Test SDK') {
                 steps {
                     script {
-                        dev1ListOfIPs = object.getIPs('dev1')
+                        dev1ListOfIPs = capCloud.getIPs('dev1')
                         yamlBuilder.configureValuesYAML('dev1', 'volpay-bo-perimeter.yaml',dev1ListOfIPs)
                         yamlBuilder.configureValuesYAML('dev1', 'volpay-bo-business.yaml',dev1ListOfIPs)
                         yamlBuilder.configureValuesYAML('dev1', 'volpay-rt-bg-business.yaml',dev1ListOfIPs)
