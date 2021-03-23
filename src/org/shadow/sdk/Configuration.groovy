@@ -34,10 +34,9 @@ class Configuration implements Serializable {
     def configureValuesYAML(String environment, String fileName, JSONArray listOfIPs) {
         try {
             String valuesFile = steps.libraryResource "com/visa/jenkins/$fileName"
-            println(valuesFile)
-
+            println valuesFile
             def valuesYAML = steps.readYaml text: valuesFile
-            println(valuesYAML)
+            println valuesYAML
 
             List<String> cassandraIPs = new ArrayList<>()
             List<String> mongoIPs = new ArrayList<>()
