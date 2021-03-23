@@ -1,9 +1,60 @@
 import org.shadow.sdk.AzureSDK
 import org.shadow.sdk.Configuration;
 
+
+def configureValuesYAML(String environment, def file, JSONArray listOfIPs) {
+    try {
+
+        def valuesYAML = readYaml text: file
+        println valuesYAML.toString()
+
+        steps.sh 'echo hello'
+
+        List<String> cassandraIPs = new ArrayList<>()
+        List<String> mongoIPs = new ArrayList<>()
+        List<String> rabbitmqIPs = new ArrayList<>()
+        //*List<String> zookeeperIPs = new ArrayList<>()*//*
+        List<String> kafkaIPs = new ArrayList<>()
+
+        def tempIp
+
+        valuesYAML.hostAliases.pop()
+
+        /*cassandraIPs = getComponentIPs('cassandra', listOfIPs)
+        mongoIPs = getComponentIPs('mongod', listOfIPs)
+        rabbitmqIPs = getComponentIPs('rabbit', listOfIPs)
+        kafkaIPs = getComponentIPs('kafka', listOfIPs)*/
+
+        valuesYAML.host.cassandra = cassandraIPs.join(",")
+        valuesYAML.host.mongodb = mongoIPs.join(",")
+
+        // Currently Volpay supports only one zookeeper
+        valuesYAML.host.zookeeper = kafkaIPs[0].replace("9093", "2181")
+        valuesYAML.host.kafka = kafkaIPs.join(",")
+        valuesYAML.host.rabbitmq = rabbitmqIPs.join(",")
+
+        valuesYAML.database.cassandra = "earthport_write"
+        valuesYAML.database.mongodb = "earthport_read"
+
+        valuesYAML.credentials.rabbitmq_user = "rabbit"
+        valuesYAML.credentials.rabbitmq_password = "rabbit"
+
+        valuesYAML.credentials.mongo_user = "volpay"
+        valuesYAML.credentials.mongo_password = "volpay"
+
+        println(valuesYAML)
+
+        writeYaml file: environment + '.yaml', data: valuesYAML
+    }
+    catch (Exception e) {
+        println("Exception: ${e}")
+    }
+
+}
+
 def call() {
     AzureSDK capCloud = AzureSDK.getInstance(this)
-    Configuration yamlBuilder = Configuration.getInstance(this)
+    //Configuration yamlBuilder = Configuration.getInstance(this)
 
     pipeline {
         agent {
@@ -19,7 +70,7 @@ def call() {
                     script {
                         dev1ListOfIPs = capCloud.getIPs('dev1')
                         def volpayBoBusiness = libraryResource "org/visa/jenkins/volpay-bo-business.yaml"
-                        yamlBuilder.configureValuesYAML('dev1',volpayBoBusiness,dev1ListOfIPs)
+                        configureValuesYAML('dev1', volpayBoBusiness, dev1ListOfIPs)
                         /*yamlBuilder.configureValuesYAML('dev1', 'volpay-bo-business.yaml',dev1ListOfIPs)
                         yamlBuilder.configureValuesYAML('dev1', 'volpay-rt-bg-business.yaml',dev1ListOfIPs)
                         yamlBuilder.configureValuesYAML('dev1', 'volpay-rt-cg-business.yaml',dev1ListOfIPs)
