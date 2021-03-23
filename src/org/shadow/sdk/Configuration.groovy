@@ -68,6 +68,8 @@ class Configuration implements Serializable {
             valuesYAML.credentials.mongo_user = "volpay"
             valuesYAML.credentials.mongo_password = "volpay"
 
+            println(valuesYAML)
+
             steps.writeYaml file: environment + '.yaml', data: valuesYAML
         }
         catch (Exception e) {
