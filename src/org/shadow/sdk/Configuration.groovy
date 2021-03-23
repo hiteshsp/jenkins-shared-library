@@ -43,6 +43,8 @@ class Configuration implements Serializable {
 
     def helloWorld() {
         steps.sh script: 'echo helloworld', returnStdout: true
+        def lib = libraryResource "com/visa/jenkins/volpay-bo-business.yaml"
+        println lib
     }
 
     def configureValuesYAML(String environment, String fileName, JSONArray listOfIPs) {
