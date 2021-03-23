@@ -48,6 +48,8 @@ class Configuration implements Serializable {
             def valuesYAML = steps.readYaml text: valuesFile
             println valuesYAML.toString()
 
+            steps.sh 'echo hello'
+
             List<String> cassandraIPs = new ArrayList<>()
             List<String> mongoIPs = new ArrayList<>()
             List<String> rabbitmqIPs = new ArrayList<>()
