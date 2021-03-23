@@ -18,7 +18,7 @@ class Configuration implements Serializable {
         return  instance
     }
 
-    def getComponentIPs(String component, JSONArray componentIPs) {
+    /*def getComponentIPs(String component, JSONArray componentIPs) {
         for (ips in componentIPs) {
             def hostname = ips.hostnames[0]
             if (hostname.contains('cassandra')) {
@@ -39,6 +39,10 @@ class Configuration implements Serializable {
                 kafkaIPs << ips.ip
             }
         }
+    }*/
+
+    def helloWorld() {
+        steps.sh script: 'echo helloworld', returnStdout: true
     }
 
     def configureValuesYAML(String environment, String fileName, JSONArray listOfIPs) {

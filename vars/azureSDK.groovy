@@ -18,11 +18,12 @@ def call() {
                 steps {
                     script {
                         dev1ListOfIPs = capCloud.getIPs('dev1')
-                        yamlBuilder.configureValuesYAML('dev1','volpay-bo-perimeter.yaml',dev1ListOfIPs)
+                        yamlBuilder.helloWorld()
+                       /* yamlBuilder.configureValuesYAML('dev1','volpay-bo-perimeter.yaml',dev1ListOfIPs)
                         yamlBuilder.configureValuesYAML('dev1', 'volpay-bo-business.yaml',dev1ListOfIPs)
                         yamlBuilder.configureValuesYAML('dev1', 'volpay-rt-bg-business.yaml',dev1ListOfIPs)
                         yamlBuilder.configureValuesYAML('dev1', 'volpay-rt-cg-business.yaml',dev1ListOfIPs)
-                        yamlBuilder.configureValuesYAML('dev1', 'volpay-rt-pr-business.yaml',dev1ListOfIPs)
+                        yamlBuilder.configureValuesYAML('dev1', 'volpay-rt-pr-business.yaml',dev1ListOfIPs)*/
                     }
                 }
             }
