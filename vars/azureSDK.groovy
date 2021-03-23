@@ -1,7 +1,7 @@
 import org.shadow.sdk.AzureSDK;
 
 def call() {
-    AzureSDK object = new AzureSDK(this)
+    AzureSDK object = AzureSDK.getInstance(this)
 
     pipeline {
         agent {
