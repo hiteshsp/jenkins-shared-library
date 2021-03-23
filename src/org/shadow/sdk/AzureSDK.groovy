@@ -13,8 +13,8 @@ class AzureSDK implements Serializable {
 
     JSONArray getIPs(String env){
         def resourceGroupName = env + '-volpay-occ-rg'
-        def ipList = steps.sh script: 'az vm list-ip-addresses -g '+ resourceGroupName +' --query "[].virtualMachine.{ ip: network.privateIpAddresses[0], hostnames: [name]}"', returnStdout: true
-        def ipListJSON = steps.readJSON text: ipList
+        def ipList = instance.sh script: 'az vm list-ip-addresses -g '+ resourceGroupName +' --query "[].virtualMachine.{ ip: network.privateIpAddresses[0], hostnames: [name]}"', returnStdout: true
+        def ipListJSON = instance.readJSON text: ipList
         return ipListJSON
     }
 
