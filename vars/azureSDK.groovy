@@ -15,6 +15,7 @@ def call() {
             stage('Test SDK') {
                 steps {
                     script {
+                        println object.toString()
                         println object.getIPs('dev1')
                     }
                 }
