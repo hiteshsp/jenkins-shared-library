@@ -1,0 +1,72 @@
+replicaCount:
+  ui: 1
+
+ssl:
+  location: /usr/local/keys
+  secretName: sslkey
+  kafka_trust_store: /usr/local/keys/server.truststore.jks
+  mongo_trust_store: /usr/local/keys/server.truststore.jks
+  cassandra_trust_store: /usr/local/keys/server.truststore.jks
+  zookeeper_trust_store: /usr/local/keys/server.truststore.jks
+  kafka_trust_store_pass: changeit
+  mongo_trust_store_pass: changeit
+  cassandra_trust_store_pass: changeit
+  zookeeper_trust_store_pass: changeit
+  kafka_key_store: /usr/local/keys/server.keystore.jks
+  mongo_key_store: /usr/local/keys/server.keystore.jks
+  cassandra_key_store: /usr/local/keys/server.keystore.jks
+  zookeeper_key_store: /usr/local/keys/server.keystore.jks
+  kafka_key_store_pass: changeit
+  mongo_key_store_pass: changeit
+  cassandra_key_store_pass: changeit
+  zookeeper_key_store_pass: changeit
+  mongo_key_pass: changeit
+  
+appConfig:
+  master_model: RD_PRSTNCE_MDL
+
+securityContext:
+  readOnlyRootFilesystem: true
+
+image:
+  repository:
+    ui: cicd0acr.azurecr.io/ui-app
+  pullPolicy: Always
+  imagePullSecrets: acr-cred
+
+resources:
+  ui:
+    limits:
+      memory: 600Mi
+      cpu: 1
+    requests:
+      memory: 300Mi
+      cpu: 500m
+
+
+readinessProbe: {}
+
+host:
+  rest: localhost
+
+hostAliases:
+- ip: "127.0.0.1"
+  hostnames:
+  - "localhost"
+
+ui_config:
+  refresh_timeout: "14"
+  idle_timeout: "15"
+  has_idle_timeout: "true"
+  copyright: VolPay, Volante Technologies Inc
+  version: "1.0.0"
+  protocol: https
+  port: "443"
+  is_same_machine: "true"
+  rest_app: rest/rest
+  title: VolPay
+
+service:
+  ui:
+    type: NodePort
+    port: 8090

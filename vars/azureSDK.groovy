@@ -1,7 +1,9 @@
-import org.shadow.sdk.AzureSDK;
+import org.shadow.sdk.AzureSDK
+import org.shadow.sdk.Configuration;
 
 def call() {
-    AzureSDK object = AzureSDK.getInstance(this)
+    AzureSDK capCloud = AzureSDK.getInstance(this)
+    Configuration yamlBuilder = new Configuration(this)
 
     pipeline {
         agent {
@@ -15,8 +17,12 @@ def call() {
             stage('Test SDK') {
                 steps {
                     script {
-                        println object.toString()
-                        println object.getIPs('dev1')
+                        dev1ListOfIPs = object.getIPs('dev1')
+                        yamlBuilder.configureValuesYAML('dev1', 'volpay-bo-perimeter.yaml',dev1ListOfIPs)
+                        yamlBuilder.configureValuesYAML('dev1', 'volpay-bo-business.yaml',dev1ListOfIPs)
+                        yamlBuilder.configureValuesYAML('dev1', 'volpay-rt-bg-business.yaml',dev1ListOfIPs)
+                        yamlBuilder.configureValuesYAML('dev1', 'volpay-rt-cg-business.yaml',dev1ListOfIPs)
+                        yamlBuilder.configureValuesYAML('dev1', 'volpay-rt-pr-business.yaml',dev1ListOfIPs)
                     }
                 }
             }

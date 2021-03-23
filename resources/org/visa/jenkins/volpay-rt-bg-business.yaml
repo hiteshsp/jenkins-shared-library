@@ -1,0 +1,134 @@
+cassandra_dc: occ
+replicaCount:
+  bip: 1
+  sync: 1
+  fm: 1
+  reconciliation: 1
+
+ssl:
+  location: /usr/local/keys
+  secretName: sslkey
+  kafka_trust_store: /usr/local/keys/server.truststore.jks
+  mongo_trust_store: /usr/local/keys/server.truststore.jks
+  cassandra_trust_store: /usr/local/keys/server.truststore.jks
+  zookeeper_trust_store: /usr/local/keys/server.truststore.jks
+  kafka_trust_store_pass: changeit
+  mongo_trust_store_pass: changeit
+  cassandra_trust_store_pass: changeit
+  zookeeper_trust_store_pass: changeit
+  kafka_key_store: /usr/local/keys/server.keystore.jks
+  mongo_key_store: /usr/local/keys/server.keystore.jks
+  cassandra_key_store: /usr/local/keys/server.keystore.jks
+  zookeeper_key_store: /usr/local/keys/server.keystore.jks
+  kafka_key_store_pass: changeit
+  mongo_key_store_pass: changeit
+  cassandra_key_store_pass: changeit
+  zookeeper_key_store_pass: changeit
+  mongo_key_pass: changeit
+ 
+appConfig:
+  master_model: RD_PRSTNCE_MDL
+  master_datasource: readdb
+
+config:
+  conf_file_loc: /usr/local/conf/cred.properties
+  load_conf_file: false
+
+securityContext:
+  readOnlyRootFilesystem: true
+
+image:
+  repository:
+    sync: cicd0acr.azurecr.io/sync-app
+    script: cicd0acr.azurecr.io/script-app
+    bip: cicd0acr.azurecr.io/bip-app
+    fm: cicd0acr.azurecr.io/fm-app
+    reconciliation: cicd0acr.azurecr.io/reconciliation-app
+  pullPolicy: Always
+  imagePullSecrets: acr-cred
+
+host:
+  cassandra: localhost
+  mongodb: localhost
+  kafka: localhost:9092
+  zookeeper: localhost:2181
+  rabbitmq: localhost:5672
+  rabbitmq_virtualhost: /
+  rest: localhost
+  
+resources:
+  bip:
+    limits:
+      memory: 3000Mi
+      cpu: 1
+    requests:
+      memory: 1000Mi
+      cpu: 500m
+  sync:
+    limits:
+      memory: 3000Mi
+      cpu: 1
+    requests:
+      memory: 1000Mi
+      cpu: 500m
+  fm:
+    limits:
+      memory: 3000Mi
+      cpu: 1
+    requests:
+      memory: 1000Mi
+      cpu: 500m
+  reconciliation:
+    limits:
+      memory: 3000Mi
+      cpu: 1
+    requests:
+      memory: 1000Mi
+      cpu: 500m      
+
+readinessProbe: {}      
+
+
+  
+hostAliases:
+ - ip: "127.0.0.1"
+   hostnames:
+     - "localhost"
+
+database:
+  cassandra: earth_port_write
+  mongodb: earth_port_read
+
+
+credentials:
+  rabbitmq_user: guest
+  rabbitmq_password: guest
+  mongo_user: volpay
+  mongo_password: volpay
+
+
+service:
+  bip:
+    port: 80
+    type: NodePort
+
+env:
+  intf_to_forex_in_queue: queue.forex.rates
+  forex: exchange.forex
+  forex_to_interface_rk: rk.forex.payout.rates-response
+  backoffice_to_rtp_in_queue: q.rtp.volante.accounting
+  rtp_bo: ex.rtp.acs.response
+  rtp_to_backoffice_rk: accounting
+  intf_to_rtp_in_queue: q.rtp.txn.accounting
+  rtp_intf: ex.rtp.txn.response
+  rtp_to_interface_rk: transactional
+  intf_to_epspo_in_queue: queue.epc.newPayout
+  eps_po: exchange.epc.complianceEvent
+  epspo_p_to_interface_rk: epc.screening.poutpositive
+  epspo_r_to_interface_rk: epc.screening.poutreject
+  epspo_a_to_interface_rk: epc.screening.poutawaiting
+  intf_to_epscdt_in_queue: queue.epc.newComplianceCredit
+  eps_cdt: exchange.epc.complianceCredits.complianceEvent
+  epscdt_p_to_interface_rk: epc.screening.cdtpositive
+  epscdt_r_to_interface_rk: epc.screening.cdtreject
+  bo_to_eps_in_queue: q.eps.backoffice
