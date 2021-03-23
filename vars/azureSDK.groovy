@@ -2,6 +2,29 @@ import org.shadow.sdk.AzureSDK
 import org.shadow.sdk.Configuration
 import net.sf.json.JSONArray
 
+def getComponentIPs(String component, JSONArray componentIPs) {
+    for (ips in componentIPs) {
+        def hostname = ips.hostnames[0]
+        if (hostname.contains('cassandra')) {
+            valuesYAML.hostAliases.add(ips)
+            tempIp = ips.ip + ":9042"
+            cassandraIPs << ips.ip
+        } else if (hostname.contains('mongo')) {
+            valuesYAML.hostAliases.add(ips)
+            tempIp = ips.ip + ":27017"
+            mongoIPs << ips.ip
+        } else if (hostname.contains('rabbit')) {
+            valuesYAML.hostAliases.add(ips)
+            tempIp = ips.ip + ":5672"
+            rabbitmqIPs << ips.ip
+        } else if (hostname.contains('kafka')) {
+            valuesYAML.hostAliases.add(ips)
+            tempIp = ips.ip + ":9093"
+            kafkaIPs << ips.ip
+        }
+    }
+}
+
 def configureValuesYAML(String environment, def file, JSONArray listOfIPs) {
     try {
 
@@ -20,10 +43,10 @@ def configureValuesYAML(String environment, def file, JSONArray listOfIPs) {
 
         valuesYAML.hostAliases.pop()
 
-        /*cassandraIPs = getComponentIPs('cassandra', listOfIPs)
+        cassandraIPs = getComponentIPs('cassandra', listOfIPs)
         mongoIPs = getComponentIPs('mongod', listOfIPs)
         rabbitmqIPs = getComponentIPs('rabbit', listOfIPs)
-        kafkaIPs = getComponentIPs('kafka', listOfIPs)*/
+        kafkaIPs = getComponentIPs('kafka', listOfIPs)
 
         valuesYAML.host.cassandra = cassandraIPs.join(",")
         valuesYAML.host.mongodb = mongoIPs.join(",")
