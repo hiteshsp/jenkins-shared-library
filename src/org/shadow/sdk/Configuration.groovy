@@ -29,6 +29,7 @@ class Configuration implements Serializable {
                 kafkaIPs << ips.ip
             }
         }
+    }
 
     def configureValuesYAML(String environment, String fileName, JSONArray listOfIPs) {
         try {
