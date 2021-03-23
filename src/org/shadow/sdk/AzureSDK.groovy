@@ -18,8 +18,6 @@ class AzureSDK implements Serializable {
         return ipListJSON
     }
 
-
-
     static AzureSDK getInstance(Script steps) {
         if (instance == null) {
             instance = new AzureSDK(steps)

@@ -4,9 +4,19 @@ package org.shadow.sdk
 import net.sf.json.JSONArray
 
 class Configuration implements Serializable {
-    private Script steps
+
+    private static Script steps
+
+    private static Configuration instance
 
     Configuration(steps) { this.steps = steps }
+
+    static Configuration getInstance(Script steps) {
+        if (instance == null) {
+            instance = new Configuration(steps)
+        }
+        return  instance
+    }
 
     def getComponentIPs(String component, JSONArray componentIPs) {
         for (ips in componentIPs) {
