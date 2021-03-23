@@ -56,7 +56,7 @@ readinessProbe: {}
 host:
   cassandra: localhost
   mongodb: localhost
-  kafka: localhost:9092
+  kafka: localhost:9093
   zookeeper: localhost:2181
   rabbitmq: localhost:5672
   rabbitmq_virtualhost: /
