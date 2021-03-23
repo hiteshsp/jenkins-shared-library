@@ -49,7 +49,7 @@ class Configuration implements Serializable {
 
     def configureValuesYAML(String environment, String fileName, JSONArray listOfIPs) {
         try {
-            def filePath = "com/visa/jenkins/volpay-bo-business.yaml"
+            def filePath = "org/visa/jenkins/volpay-bo-business.yaml"
             def valuesFile = steps.libraryResource filePath
 
             println(valuesFile)
