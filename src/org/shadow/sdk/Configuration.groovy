@@ -41,20 +41,18 @@ class Configuration implements Serializable {
         }
     }*/
 
-    def helloWorld() {
+    /*def helloWorld() {
         steps.sh script: 'echo helloworld', returnStdout: true
         def lib = steps.libraryResource "org/visa/jenkins/volpay-bo-business.yaml"
         println lib.getClass()
-    }
+    }*/
 
-    def configureValuesYAML(String environment, String fileName, JSONArray listOfIPs) {
+    def configureValuesYAML(String environment, def file, JSONArray listOfIPs) {
         try {
-            def filePath = "org/visa/jenkins/volpay-bo-business.yaml"
-            def valuesFile = steps.libraryResource filePath
+            /*def filePath = "org/visa/jenkins/volpay-bo-business.yaml"*/
 
-            println valuesFile
-            /*println valuesFile.toString()
-            def valuesYAML = steps.readYaml text: valuesFile
+
+            def valuesYAML = steps.readYaml text: file
             println valuesYAML.toString()
 
             steps.sh 'echo hello'
@@ -62,17 +60,17 @@ class Configuration implements Serializable {
             List<String> cassandraIPs = new ArrayList<>()
             List<String> mongoIPs = new ArrayList<>()
             List<String> rabbitmqIPs = new ArrayList<>()
-            *//*List<String> zookeeperIPs = new ArrayList<>()*//*
+            //*List<String> zookeeperIPs = new ArrayList<>()*//*
             List<String> kafkaIPs = new ArrayList<>()
 
             def tempIp
 
             valuesYAML.hostAliases.pop()
 
-            cassandraIPs = getComponentIPs('cassandra', listOfIPs)
+            /*cassandraIPs = getComponentIPs('cassandra', listOfIPs)
             mongoIPs = getComponentIPs('mongod', listOfIPs)
             rabbitmqIPs = getComponentIPs('rabbit', listOfIPs)
-            kafkaIPs = getComponentIPs('kafka', listOfIPs)
+            kafkaIPs = getComponentIPs('kafka', listOfIPs)*/
 
             valuesYAML.host.cassandra = cassandraIPs.join(",")
             valuesYAML.host.mongodb = mongoIPs.join(",")
@@ -93,7 +91,7 @@ class Configuration implements Serializable {
 
             println(valuesYAML)
 
-            steps.writeYaml file: environment + '.yaml', data: valuesYAML*/
+            steps.writeYaml file: environment + '.yaml', data: valuesYAML
         }
         catch (Exception e) {
             println("Exception: ${e}")
