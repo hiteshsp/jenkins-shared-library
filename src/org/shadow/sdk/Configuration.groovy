@@ -43,7 +43,7 @@ class Configuration implements Serializable {
 
     def helloWorld() {
         steps.sh script: 'echo helloworld', returnStdout: true
-        def lib = steps.libraryResource "com/visa/jenkins/volpay-bo-business.yaml"
+        def lib = steps.libraryResource "org/visa/jenkins/volpay-bo-business.yaml"
         println lib.toString()
     }
 
