@@ -9,20 +9,20 @@ class AzureSDK implements Serializable {
 
     private static AzureSDK instance
 
-    private AzureSDK(steps) { this.steps = steps }
+    AzureSDK(steps) { this.steps = steps }
 
     JSONArray getIPs(String env){
         def resourceGroupName = env + '-volpay-occ-rg'
-        def ipList = instance.sh script: 'az vm list-ip-addresses -g '+ resourceGroupName +' --query "[].virtualMachine.{ ip: network.privateIpAddresses[0], hostnames: [name]}"', returnStdout: true
-        def ipListJSON = instance.readJSON text: ipList
+        def ipList = steps.sh script: 'az vm list-ip-addresses -g '+ resourceGroupName +' --query "[].virtualMachine.{ ip: network.privateIpAddresses[0], hostnames: [name]}"', returnStdout: true
+        def ipListJSON = steps.readJSON text: ipList
         return ipListJSON
     }
 
-    static AzureSDK getInstance() {
+    /*static AzureSDK getInstance() {
         if (instance == null) {
-            instance = new AzureSDK(steps)
+            instance = new AzureSDK(this, steps)
         }
         return  instance
-    }
+    }*/
 
 }
