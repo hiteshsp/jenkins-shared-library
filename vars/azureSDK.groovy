@@ -2,7 +2,7 @@ import org.shadow.sdk.AzureSDK
 import org.shadow.sdk.Configuration
 import net.sf.json.JSONArray
 
-def getComponentIPs(String component, JSONArray componentIPs) {
+def getComponentIPs(def valuesYAML, String component, JSONArray componentIPs) {
     for (ips in componentIPs) {
         def hostname = ips.hostnames[0]
         if (hostname.contains('cassandra')) {
@@ -43,10 +43,10 @@ def configureValuesYAML(String environment, def file, JSONArray listOfIPs) {
 
         valuesYAML.hostAliases.pop()
 
-        cassandraIPs = getComponentIPs('cassandra', listOfIPs)
-        mongoIPs = getComponentIPs('mongod', listOfIPs)
-        rabbitmqIPs = getComponentIPs('rabbit', listOfIPs)
-        kafkaIPs = getComponentIPs('kafka', listOfIPs)
+        cassandraIPs = getComponentIPs(valuesYAML, 'cassandra', listOfIPs)
+        mongoIPs = getComponentIPs(valuesYAML,'mongod', listOfIPs)
+        rabbitmqIPs = getComponentIPs(valuesYAML,'rabbit', listOfIPs)
+        kafkaIPs = getComponentIPs(valuesYAML, 'kafka', listOfIPs)
 
         valuesYAML.host.cassandra = cassandraIPs.join(",")
         valuesYAML.host.mongodb = mongoIPs.join(",")
