@@ -1,6 +1,6 @@
 import org.shadow.sdk.AzureSDK
-import org.shadow.sdk.Configuration;
-
+import org.shadow.sdk.Configuration
+import net.sf.json.JSONArray
 
 def configureValuesYAML(String environment, def file, JSONArray listOfIPs) {
     try {
