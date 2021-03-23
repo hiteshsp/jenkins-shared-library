@@ -3,6 +3,12 @@ import org.shadow.sdk.Configuration
 import net.sf.json.JSONArray
 
 def getComponentIPs(def valuesYAML, String component, JSONArray componentIPs) {
+    List<String> cassandraIPs = new ArrayList<>()
+    List<String> mongoIPs = new ArrayList<>()
+    List<String> rabbitmqIPs = new ArrayList<>()
+    //*List<String> zookeeperIPs = new ArrayList<>()*//*
+    List<String> kafkaIPs = new ArrayList<>()
+
     for (ips in componentIPs) {
         def hostname = ips.hostnames[0]
         if (hostname.contains('cassandra')) {
