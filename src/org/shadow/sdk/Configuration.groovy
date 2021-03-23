@@ -48,7 +48,9 @@ class Configuration implements Serializable {
     def configureValuesYAML(String environment, String fileName, JSONArray listOfIPs) {
         try {
             String valuesFile = steps.libraryResource "com/visa/jenkins/$fileName"
-            println valuesFile.toString()
+
+            println(valuesFile)
+            /*println valuesFile.toString()
             def valuesYAML = steps.readYaml text: valuesFile
             println valuesYAML.toString()
 
@@ -57,7 +59,7 @@ class Configuration implements Serializable {
             List<String> cassandraIPs = new ArrayList<>()
             List<String> mongoIPs = new ArrayList<>()
             List<String> rabbitmqIPs = new ArrayList<>()
-            /*List<String> zookeeperIPs = new ArrayList<>()*/
+            *//*List<String> zookeeperIPs = new ArrayList<>()*//*
             List<String> kafkaIPs = new ArrayList<>()
 
             def tempIp
@@ -88,7 +90,7 @@ class Configuration implements Serializable {
 
             println(valuesYAML)
 
-            steps.writeYaml file: environment + '.yaml', data: valuesYAML
+            steps.writeYaml file: environment + '.yaml', data: valuesYAML*/
         }
         catch (Exception e) {
             println("Exception: ${e}")
